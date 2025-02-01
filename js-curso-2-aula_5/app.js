@@ -17,7 +17,7 @@ function exibirMensagemInicial() {
 exibirMensagemInicial();
 
 function verificarChute() {
-    let chute = parseInt(document.querySelector('input').value);
+    let chute = document.querySelector('input').value;
 
     if (chute === numeroSecreto) {
         exibirTextoNaTela('h1', 'Parabéns SEMPAIII! Dai Suki!');
@@ -37,18 +37,19 @@ function verificarChute() {
 }
 
 function gerarNumeroAleatorio() {
-    if (listaDeNumerosSorteados.length >= numeroLimite) {
+    let numeroEscolhido = parseInt(Math.random() * numeroLimite + 1);
+    let quantidadeDeElementosNaLista = listaDeNumerosSorteados.length;
+
+    if (quantidadeDeElementosNaLista == numeroLimite) {
         listaDeNumerosSorteados = [];
     }
-
-    let numeroEscolhido;
-    do {
-        numeroEscolhido = Math.floor(Math.random() * numeroLimite) + 1;
-    } while (listaDeNumerosSorteados.includes(numeroEscolhido));
-
-    listaDeNumerosSorteados.push(numeroEscolhido);
-    console.log(listaDeNumerosSorteados);
-    return numeroEscolhido;
+    if (listaDeNumerosSorteados.includes(numeroEscolhido)) {
+        return gerarNumeroAleatorio();
+    } else {
+        listaDeNumerosSorteados.push(numeroEscolhido);
+        console.log(listaDeNumerosSorteados)
+        return numeroEscolhido;
+    }
 }
 
 function limparCampo() {
